@@ -34,9 +34,16 @@ class Volunteer extends Person
 		$dbh = Database::getInstance();
 
 		$stmt = $dbh->prepare(
-			"insert into volunteers (skills, availability) values (?, ?)"
+			"insert into volunteers (name, email, skills, availability) values (?, ?, ?, ?)"
 		);
-		$stmt->execute([$this->skills, $this->availability]);
+
+		$stmt->execute([
+			$this->name,
+			$this->email,
+			to_pg_array($this->skills),
+			to_pg_array($this->availability)
+		]);
+
 		$this->id = $dbh->lastInsertId();
 	}
 
@@ -45,8 +52,14 @@ class Volunteer extends Person
 		$dbh = Database::getInstance();
 
 		$stmt = $dbh->prepare(
-			"update volunteers set skills = ?, availability = ? where id = ?"
+			"update volunteers set name = ?, email = ?, skills = ?, availability = ? where id = ?"
 		);
-		$stmt->execute([$this->skills, $this->availability, $this->id]);
+		$stmt->execute([
+			$this->name,
+			$this->email,
+			to_pg_array($this->skills),
+			to_pg_array($this->availability),
+			$this->id
+		]);
 	}
 }
