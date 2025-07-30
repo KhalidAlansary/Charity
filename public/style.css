@@ -1,0 +1,27 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 2em;
+}
+.skills-list {
+  margin: 1em 0;
+  padding: 0;
+  list-style: none;
+}
+.skills-list li {
+  margin-bottom: 0.3em;
+}
+.skill-item {
+  display: flex;
+  align-items: center;
+}
+.skill-item button {
+  margin-left: 0.5em;
+}
+
+input {
+  margin-bottom: 1em;
+}
+
+label {
+  display: block;
+}
