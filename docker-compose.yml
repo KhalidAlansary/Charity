@@ -30,6 +30,7 @@ services:
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf:ro
             - ./src/:/var/www/html:ro
+            - ./public/:/var/www/public:ro
         depends_on:
             - phpserver
 
