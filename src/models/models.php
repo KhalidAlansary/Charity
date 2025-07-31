@@ -1,7 +1,7 @@
 <?php
 require_once '../utils/database.php';
 
-class Person
+abstract class Person
 {
 	public $id, $name, $email;
 }
