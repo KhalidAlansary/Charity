@@ -1,65 +1,69 @@
 <?php
 require_once '../utils/database.php';
 
-abstract class Person
+abstract class User
 {
 	public $id, $name, $email;
+	protected $pswhash, $created_at;
+	protected static $table;
+
+	public static function login($email, $password)
+	{
+		$dbh = Database::getInstance();
+
+		$stmt = $dbh->prepare(
+			"select * from users natural join " . static::$table . " where email = ? and pswhash = crypt(?, pswhash)"
+		);
+		$stmt->execute([$email, $password]);
+		return $stmt->fetchObject(static::class);
+	}
+
+	public static function signup($email, $name, $password)
+	{
+		$dbh = Database::getInstance();
+
+		try {
+			$dbh->beginTransaction();
+
+			$stmt1 = $dbh->prepare(
+				"insert into users (email, name, pswhash)
+				values (?, ?, crypt(?, gen_salt('bf')))
+				returning id, email, name"
+			);
+			$stmt1->execute([$email, $name, $password]);
+			$user = $stmt1->fetchObject(static::class);
+
+			$stmt2 = $dbh->prepare(
+				"insert into " . static::$table . " (id) values (?)"
+			);
+			$stmt2->execute([$user->id]);
+
+			$dbh->commit();
+		} catch (Exception $e) {
+			$dbh->rollBack();
+			throw $e;
+		}
+		return $user;
+	}
 }
 
-class Volunteer extends Person
+class Volunteer extends User
 {
+	protected static $table = 'volunteers';
+
 	public $skills, $availability;
+}
 
-	public static function getById($id)
-	{
-		$dbh = Database::getInstance();
+class Donor extends User
+{
+	protected static $table = 'donors';
 
-		$stmt = $dbh->prepare(
-			"select skills, availability from volunteers where id = ?"
-		);
-		$stmt->execute([$id]);
-		return $stmt->fetchObject('Volunteer');
-	}
+	public $donationMethod;
+}
 
-	public static function getAll()
-	{
-		$dbh = Database::getInstance();
+class Beneficiary extends User
+{
+	protected static $table = 'beneficiaries';
 
-		$stmt = $dbh->query("select id, skills, availability from volunteers");
-		return $stmt->fetchAll(PDO::FETCH_CLASS, 'Volunteer');
-	}
-
-	public function create()
-	{
-		$dbh = Database::getInstance();
-
-		$stmt = $dbh->prepare(
-			"insert into volunteers (name, email, skills, availability) values (?, ?, ?, ?)"
-		);
-
-		$stmt->execute([
-			$this->name,
-			$this->email,
-			to_pg_array($this->skills),
-			to_pg_array($this->availability)
-		]);
-
-		$this->id = $dbh->lastInsertId();
-	}
-
-	public function update()
-	{
-		$dbh = Database::getInstance();
-
-		$stmt = $dbh->prepare(
-			"update volunteers set name = ?, email = ?, skills = ?, availability = ? where id = ?"
-		);
-		$stmt->execute([
-			$this->name,
-			$this->email,
-			to_pg_array($this->skills),
-			to_pg_array($this->availability),
-			$this->id
-		]);
-	}
+	public $needs;
 }
