@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	require_once '../models/models.php';
+	require_once 'models/models.php';
 
 	$volunteer = new Volunteer();
 	$volunteer->name = $_POST['name'];
