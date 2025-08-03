@@ -1,0 +1,7 @@
+{
+	"recommendations": [
+		"EditorConfig.EditorConfig",
+		"bmewburn.vscode-intelephense-client",
+		"bradymholt.pgformatter"
+	]
+}
