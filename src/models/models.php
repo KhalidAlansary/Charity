@@ -45,6 +45,15 @@ abstract class User
 		}
 		return $user;
 	}
+
+	public static function getAll()
+	{
+		$dbh = Database::getInstance();
+
+		$stmt = $dbh->prepare("select * from users natural join " . static::$table);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_CLASS, static::class);
+	}
 }
 
 class Volunteer extends User
