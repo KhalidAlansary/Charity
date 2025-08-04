@@ -46,6 +46,15 @@ abstract class User
 		return $user;
 	}
 
+	public static function getById($id)
+	{
+		$dbh = Database::getInstance();
+
+		$stmt = $dbh->prepare("select * from users natural join " . static::$table . " where id = ?");
+		$stmt->execute([$id]);
+		return $stmt->fetchObject(static::class);
+	}
+
 	public static function getAll()
 	{
 		$dbh = Database::getInstance();
