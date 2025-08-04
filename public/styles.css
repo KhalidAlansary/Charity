@@ -42,3 +42,8 @@ td {
 	border-collapse: collapse;
 	padding: 0.5em;
 }
+
+#form-error {
+	color: red;
+	margin-top: 1em;
+}
