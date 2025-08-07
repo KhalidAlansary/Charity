@@ -11,9 +11,18 @@
 <body>
 	<nav>
 		<ul>
-			<li><a href="/volunteer">Volunteer</a></li>
-			<li><a href="/donor">Donor</a></li>
-			<li><a href="/beneficiary">Beneficiary</a></li>
+			<li><a href="/volunteers">Volunteers</a></li>
+			<li><a href="/donors">Donors</a></li>
+			<li><a href="/beneficiaries">Beneficiaries</a></li>
+			<li class="user-menu">
+				<?php if (isset($_SESSION['user_name'])): ?>
+					<span>Hello, <?= $_SESSION['user_name'] ?></span>
+					<a href="/logout">Log out</a>
+				<?php else: ?>
+					<a href="/login">Log in</a>
+					<a href="/signup">Sign up</a>
+				<?php endif; ?>
+			</li>
 		</ul>
 	</nav>
 	<main><?= $content ?></main>
