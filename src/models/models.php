@@ -15,8 +15,10 @@ abstract class User
 		$dbh = Database::getInstance();
 
 		$stmt = $dbh->prepare(
-			'select id, name, email, type, data, created_at
-			from users where email = ? and password = ?'
+			<<<SQL
+			select id, name, email, type, data, created_at
+			from users where email = ? and password = ?
+		SQL
 		);
 		$stmt->execute([$email, $password]);
 		$row = $stmt->fetch();
@@ -40,9 +42,11 @@ abstract class User
 
 		// WARNING: In real applications, passwords should be hashed and salted.
 		$stmt = $dbh->prepare(
-			'insert into users (name, email, password, type)
+			<<<SQL
+			insert into users (name, email, password, type)
 			values (?, ?, ?, ?)
-			returning id, name, email, data, created_at'
+			returning id, name, email, data, created_at
+		SQL
 		);
 		try {
 			$stmt->execute([$name, $email, $password, $type]);
@@ -69,8 +73,10 @@ abstract class User
 		$dbh = Database::getInstance();
 
 		$stmt = $dbh->prepare(
-			'select id, name, email, type, data, created_at
-			from users where id = ?'
+			<<<SQL
+			select id, name, email, type, data, created_at
+			from users where id = ?
+		SQL
 		);
 		$stmt->execute([$id]);
 		$row = $stmt->fetch();
@@ -92,8 +98,10 @@ abstract class User
 		$dbh = Database::getInstance();
 
 		$stmt = $dbh->prepare(
-			'select id, name, email, type, data, created_at
-			from users'
+			<<<SQL
+			select id, name, email, type, data, created_at
+			from users
+		SQL
 		);
 		$stmt->execute();
 		$users = [];
