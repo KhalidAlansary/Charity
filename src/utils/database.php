@@ -22,10 +22,10 @@ class Database
 
 	public static function getInstance()
 	{
-		if (self::$instance === null) {
-			self::$instance = new Database();
+		if (Database::$instance === null) {
+			Database::$instance = new Database();
 		}
-		return self::$instance->dbh;
+		return Database::$instance->dbh;
 	}
 }
 

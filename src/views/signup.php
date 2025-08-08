@@ -4,7 +4,7 @@ ob_start();
 ?>
 
 <h1>Sign Up</h1>
-<form hx-post="/<?= $user_type ?>/signup" hx-target="#form-error">
+<form hx-post="/signup" hx-target="#form-error">
 	<label>
 		Name: <input type="text" name="name" autofocus>
 	</label>
@@ -15,6 +15,16 @@ ob_start();
 
 	<label>
 		Password: <input type="password" name="password" minlength="8" required>
+	</label>
+
+	<label>
+		Type:
+		<select name="type" required>
+			<option value="admin">Admin</option>
+			<option value="volunteer">Volunteer</option>
+			<option value="donor">Donor</option>
+			<option value="beneficiary">Beneficiary</option>
+		</select>
 	</label>
 
 	<div id="form-error"></div>

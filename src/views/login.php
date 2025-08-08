@@ -4,7 +4,7 @@ ob_start();
 ?>
 
 <h1>Login</h1>
-<form hx-post="/<?= $user_type ?>/login" hx-target="#form-error">
+<form hx-post="/login" hx-target="#form-error">
 	<label>
 		Email: <input type="email" name="email" autofocus required>
 	</label>

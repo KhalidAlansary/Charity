@@ -1,23 +1,20 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-	$user_type = 'volunteer';
 	require 'views/login.php';
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	require_once 'models/models.php';
-	$name = $_POST['name'] ?? '';
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 
-	$volunteer = Volunteer::login($email, $password);
+	$user = User::login($email, $password);
 
-	if ($volunteer === false) {
+	if ($user === false) {
 		http_response_code(403);
 		readfile('components/login_error.html');
 	} else {
 		session_start();
-		$_SESSION['user_type'] = 'volunteer';
-		$_SESSION['user_id'] = $volunteer->id;
+		$_SESSION['user'] = $user;
 		http_response_code(303);
-		header('HX-Redirect: /volunteer/profile/');
+		header('HX-Redirect: /profile/');
 	}
 }

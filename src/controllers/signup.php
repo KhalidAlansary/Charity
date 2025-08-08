@@ -1,23 +1,22 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-	$user_type = 'volunteer';
 	require 'views/signup.php';
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	require_once 'models/models.php';
-	$name = $_POST['name'] ?? '';
+	$name = $_POST['name'];
 	$email = $_POST['email'];
 	$password = $_POST['password'];
+	$type = $_POST['type'];
 
-	$volunteer = Volunteer::signup($email, $name, $password);
-	if ($volunteer === false) {
+	$user = User::signup($name, $email, $password, $type);
+	if ($user === false) {
 		http_response_code(403);
-		require 'components/signup_error.php';
+		readfile('components/signup_error.html');
 		exit;
 	}
 
 	session_start();
-	$_SESSION['user_type'] = 'volunteer';
-	$_SESSION['user_id'] = $volunteer->id;
+	$_SESSION['user'] = $user;
 	http_response_code(303);
-	header('HX-Redirect: /volunteer/profile/');
+	header('HX-Redirect: /profile/');
 }

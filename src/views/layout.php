@@ -15,8 +15,8 @@
 			<li><a href="/donors">Donors</a></li>
 			<li><a href="/beneficiaries">Beneficiaries</a></li>
 			<li class="user-menu">
-				<?php if (isset($_SESSION['user_name'])): ?>
-					<span>Hello, <?= $_SESSION['user_name'] ?></span>
+				<?php if (isset($_SESSION['user'])): ?>
+					<span>Hello, <?= $_SESSION['user']->name ?></span>
 					<a href="/logout">Log out</a>
 				<?php else: ?>
 					<a href="/login">Log in</a>
