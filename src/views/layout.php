@@ -29,8 +29,8 @@
 	</nav>
 	<main><?= $content ?></main>
 	<script
-		src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"
-		integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm"
+		src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.js"
+		integrity="sha384-ksKjJrwjL5VxqAkAZAVOPXvMkwAykMaNYegdixAESVr+KqLkKE8XBDoZuwyWVUDv"
 		crossorigin="anonymous"></script>
 </body>
 
