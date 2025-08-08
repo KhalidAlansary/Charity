@@ -5,6 +5,7 @@ $routes = [
 	'/donors/' => 'donors.php',
 	'/login/' => 'login.php',
 	'/signup/' => 'signup.php',
+	'/logout/' => 'logout.php',
 	'/profile/' => 'profile.php',
 ];
 
