@@ -19,7 +19,7 @@ ob_start();
 		<?php foreach ($donors as $donor): ?>
 			<tr>
 				<td><?= htmlspecialchars($donor->id) ?></td>
-				<td><?= htmlspecialchars($donor->name ?? "") ?></td>
+				<td><?= htmlspecialchars($donor->name ?? '') ?></td>
 				<td><?= htmlspecialchars($donor->email) ?></td>
 				<td><?= htmlspecialchars($donor->donationMethod) ?></td>
 			</tr>

@@ -22,8 +22,8 @@ ob_start();
 				<td><?= htmlspecialchars($volunteer->id) ?></td>
 				<td><?= htmlspecialchars($volunteer->name ?? "") ?></td>
 				<td><?= htmlspecialchars($volunteer->email) ?></td>
-				<td><?= htmlspecialchars(implode(", ", $volunteer->skills) ?? "") ?></td>
-				<td><?= htmlspecialchars(implode(", ", $volunteer->availability) ?? "") ?></td>
+				<td><?= htmlspecialchars(implode(', ', $volunteer->skills) ?? '') ?></td>
+				<td><?= htmlspecialchars(implode(', ', $volunteer->availability) ?? '') ?></td>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>

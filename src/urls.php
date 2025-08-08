@@ -9,10 +9,10 @@ $routes = [
 	'/profile/' => 'profile.php',
 ];
 
-$path = rtrim($_SERVER['REQUEST_URI'], "/") . '/';
+$path = rtrim($_SERVER['REQUEST_URI'], '/') . '/';
 if (array_key_exists($path, $routes)) {
 	require 'controllers/' . $routes[$path];
 } else {
 	http_response_code(404);
-	echo "404 Not Found";
+	echo '404 Not Found';
 }

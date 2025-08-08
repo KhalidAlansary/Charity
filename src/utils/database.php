@@ -6,10 +6,10 @@ class Database
 
 	private function __construct()
 	{
-		$host = getenv("POSTGRES_HOST");
-		$password = trim(file_get_contents("/run/secrets/db_password"));
+		$host = getenv('POSTGRES_HOST');
+		$password = trim(file_get_contents('/run/secrets/db_password'));
 
-		$this->dbh = new PDO("pgsql:host=$host", "postgres", $password, [
+		$this->dbh = new PDO("pgsql:host=$host", 'postgres', $password, [
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
 		]);
 	}
@@ -17,7 +17,7 @@ class Database
 	private function __clone() {}
 	public function __wakeup()
 	{
-		throw new \Exception("Cannot unserialize a singleton.");
+		throw new \Exception('Cannot unserialize a singleton.');
 	}
 
 	public static function getInstance()

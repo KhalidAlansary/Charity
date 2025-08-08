@@ -15,8 +15,8 @@ abstract class User
 		$dbh = Database::getInstance();
 
 		$stmt = $dbh->prepare(
-			"select id, name, email, type, data, created_at
-			from users where email = ? and password = ?"
+			'select id, name, email, type, data, created_at
+			from users where email = ? and password = ?'
 		);
 		$stmt->execute([$email, $password]);
 		$row = $stmt->fetch();
@@ -40,9 +40,9 @@ abstract class User
 
 		// WARNING: In real applications, passwords should be hashed and salted.
 		$stmt = $dbh->prepare(
-			"insert into users (name, email, password, type)
+			'insert into users (name, email, password, type)
 			values (?, ?, ?, ?)
-			returning id, name, email, data, created_at"
+			returning id, name, email, data, created_at'
 		);
 		try {
 			$stmt->execute([$name, $email, $password, $type]);
@@ -69,8 +69,8 @@ abstract class User
 		$dbh = Database::getInstance();
 
 		$stmt = $dbh->prepare(
-			"select id, name, email, type, data, created_at
-			from users where id = ?"
+			'select id, name, email, type, data, created_at
+			from users where id = ?'
 		);
 		$stmt->execute([$id]);
 		$row = $stmt->fetch();
@@ -92,8 +92,8 @@ abstract class User
 		$dbh = Database::getInstance();
 
 		$stmt = $dbh->prepare(
-			"select id, name, email, type, data, created_at
-			from users"
+			'select id, name, email, type, data, created_at
+			from users'
 		);
 		$stmt->execute();
 		$users = [];
@@ -158,7 +158,7 @@ class Donor extends User implements ILogin
 		$donor->created_at = $row['created_at'];
 
 		$data = json_decode($row['data'], true);
-		$donor->donationMethod = $data['donationMethod'] ?? "cash";
+		$donor->donationMethod = $data['donationMethod'] ?? 'cash';
 		return $donor;
 	}
 }
