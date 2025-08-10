@@ -1,5 +1,3 @@
-create extension if not exists pgcrypto;
-
 create type donationMethod as enum (
 	'cash',
 	'check',
