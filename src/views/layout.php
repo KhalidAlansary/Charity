@@ -1,5 +1,3 @@
-<?php require_once 'models/models.php'; ?>
-<?php session_start(); ?>
 <!doctype html>
 <html lang="en">
 

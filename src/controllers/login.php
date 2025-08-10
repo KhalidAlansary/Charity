@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		http_response_code(403);
 		readfile('components/login_error.html');
 	} else {
-		session_start();
 		$_SESSION['user'] = $user;
 		http_response_code(303);
 		header('HX-Redirect: /profile/');

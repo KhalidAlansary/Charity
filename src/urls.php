@@ -11,6 +11,8 @@ $routes = [
 
 $path = rtrim($_SERVER['REQUEST_URI'], '/') . '/';
 if (array_key_exists($path, $routes)) {
+	require_once 'models/models.php';
+	session_start();
 	require 'controllers/' . $routes[$path];
 } else {
 	http_response_code(404);

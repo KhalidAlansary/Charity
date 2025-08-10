@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		exit;
 	}
 
-	session_start();
 	$_SESSION['user'] = $user;
 	http_response_code(303);
 	header('HX-Redirect: /profile/');
