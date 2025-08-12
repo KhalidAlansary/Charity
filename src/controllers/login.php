@@ -2,7 +2,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 	require 'views/login.php';
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	require_once 'models/models.php';
+	require_once 'models/users.php';
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 

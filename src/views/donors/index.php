@@ -1,5 +1,5 @@
 <?php
-require_once 'models/models.php';
+require_once 'models/users.php';
 $pageTitle = 'Donors';
 ob_start();
 ?>

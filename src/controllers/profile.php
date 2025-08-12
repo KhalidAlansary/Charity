@@ -1,5 +1,5 @@
 <?php
-require_once 'models/models.php';
+require_once 'models/users.php';
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 	if (!isset($_SESSION['user'])) {
 		header('Location: /login/');
