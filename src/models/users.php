@@ -1,5 +1,5 @@
 <?php
-require_once 'utils/database.php';
+require_once 'models/database.php';
 
 interface ILogin
 {
