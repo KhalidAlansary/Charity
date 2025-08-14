@@ -17,7 +17,7 @@ class Database
 	private function __clone() {}
 	public function __wakeup()
 	{
-		throw new \Exception('Cannot unserialize a singleton.');
+		throw new Exception('Cannot unserialize a singleton.');
 	}
 
 	public static function getInstance()
