@@ -1,5 +1,5 @@
 <?php
-require_once 'models/database.php';
+require_once 'core/singletons.php';
 
 interface ILogin
 {
@@ -12,7 +12,7 @@ abstract class User
 
 	public static function login($email, $password)
 	{
-		$dbh = Database::getInstance();
+		$dbh = Database::getHandle();
 
 		$stmt = $dbh->prepare(
 			<<<SQL
@@ -38,7 +38,7 @@ abstract class User
 
 	public static function signup($name, $email, $password, $type)
 	{
-		$dbh = Database::getInstance();
+		$dbh = Database::getHandle();
 
 		// WARNING: In real applications, passwords should be hashed and salted.
 		$stmt = $dbh->prepare(
@@ -70,7 +70,7 @@ abstract class User
 
 	public static function getById($id)
 	{
-		$dbh = Database::getInstance();
+		$dbh = Database::getHandle();
 
 		$stmt = $dbh->prepare(
 			<<<SQL
@@ -95,7 +95,7 @@ abstract class User
 
 	public static function getAll()
 	{
-		$dbh = Database::getInstance();
+		$dbh = Database::getHandle();
 
 		$stmt = $dbh->prepare(
 			<<<SQL
