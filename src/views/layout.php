@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="/public/styles/styles.css">
 </head>
 
-<body>
+<body hx-ext="response-targets">
 	<nav>
 		<ul>
 			<li><a href="/volunteers">Volunteers</a></li>
@@ -27,8 +27,12 @@
 	</nav>
 	<main><?= $content ?></main>
 	<script
-		src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.js"
-		integrity="sha384-ksKjJrwjL5VxqAkAZAVOPXvMkwAykMaNYegdixAESVr+KqLkKE8XBDoZuwyWVUDv"
+		src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"
+		integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/htmx-ext-response-targets@2.0.2"
+		integrity="sha384-aiAPowx3gG+h620/TJLIfLPgBcn6DMWlhu45oOhWVwTOjds9E6X2pmGbT4Xc8XMJ"
 		crossorigin="anonymous"></script>
 </body>
 
