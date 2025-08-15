@@ -4,7 +4,7 @@ ob_start();
 ?>
 
 <h1>Sign Up</h1>
-<form hx-post="/signup" hx-target="#form-error">
+<form hx-post="/signup" hx-target-error="#form-error">
 	<label>
 		Name: <input type="text" name="name" autofocus>
 	</label>
@@ -32,17 +32,6 @@ ob_start();
 	<button type="submit">Signup</button>
 	<button type="reset">Reset</button>
 </form>
-
-<script>
-	document.addEventListener("DOMContentLoaded", (event) => {
-		document.body.addEventListener('htmx:beforeSwap', function(evt) {
-			if (evt.detail.xhr.status === 403) {
-				evt.detail.shouldSwap = true;
-				evt.detail.isError = false;
-			}
-		});
-	});
-</script>
 
 <?php
 $content = ob_get_clean();
