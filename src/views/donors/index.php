@@ -27,6 +27,8 @@ ob_start();
 	</tbody>
 </table>
 
+<a href="/donors/donate/">Donate</a>
+
 <?php
 $content = ob_get_clean();
 require 'views/layout.php';
