@@ -22,8 +22,8 @@ create table users (
 );
 
 create table assignments (
-	id integer primary key references users (id),
-	volunteer_id integer references volunteers (id)
+	id integer primary key generated always as identity,
+	volunteer_id integer references users (id)
 );
 
 create table events (
