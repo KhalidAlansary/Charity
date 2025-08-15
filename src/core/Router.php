@@ -11,13 +11,11 @@ class Router extends Singleton
 		$this->routes[$route] = $handler;
 	}
 
-	// PERF: Routes parsing and registering is repeated for each request.
-	// Maybe cache it?
 	public function dispatch()
 	{
 		$path = rtrim($_SERVER['REQUEST_URI'], '/') . '/';
 
-		foreach ($this->routes as $route => $handler) {
+		foreach ($this->routes as $route => $controller) {
 			// Transform the route to a regex pattern
 			$pattern = '#^' . preg_replace('/\[(\w+)]/', '([\w-]+)', $route) . '$#';
 
@@ -29,6 +27,7 @@ class Router extends Singleton
 					$params = array_combine($paramsNames[1], $paramsValues);
 				}
 				$method = $_SERVER['REQUEST_METHOD'];
+				$handler = require_once $controller;
 				call_user_func_array([$handler, $method], $params);
 				return;
 			}
