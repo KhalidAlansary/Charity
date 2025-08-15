@@ -17,4 +17,9 @@ foreach ($controllers_iterator as $controller => $fileinfo) {
 	}
 }
 
+// require all classes which may be stored in session
+require_once 'models/users.php';
+require_once 'models/payments.php';
+session_start();
+
 $router->dispatch();
