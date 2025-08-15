@@ -11,13 +11,6 @@ class Profile extends Handler
 		}
 		$user = $_SESSION['user'];
 		require 'views/profile.php';
-		require_once 'models/users.php';
-		if (!isset($_SESSION['user'])) {
-			header('Location: /login/');
-			exit;
-		}
-		$user = $_SESSION['user'];
-		require 'views/profile.php';
 	}
 }
 
