@@ -47,6 +47,7 @@ abstract class Handler
 function http_error(int $code): void
 {
 	http_response_code($code);
+	header('HX-Refresh: true');
 	readfile("pages/errors/$code.html");
 	exit;
 }
