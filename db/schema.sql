@@ -21,6 +21,12 @@ create table users (
 	created_at timestamp default current_timestamp
 );
 
+create table pending_donations (
+	id integer generated always as identity primary key,
+	amount numeric not null,
+	donor_id integer references users (id)
+);
+
 create table assignments (
 	id integer primary key generated always as identity,
 	volunteer_id integer references users (id)
