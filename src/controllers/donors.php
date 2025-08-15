@@ -1,7 +1,14 @@
 <?php
-require_once 'models/users.php';
+require_once 'core/Router.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-	$donors = Donor::getAll();
-	require 'views/donors/index.php';
+class Donors extends Handler
+{
+	public static function GET()
+	{
+		require_once 'models/users.php';
+		$donors = Donor::getAll();
+		require 'views/donors/index.php';
+	}
 }
+
+return Donors::class;
