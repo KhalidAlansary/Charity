@@ -1,12 +1,16 @@
 <?php
 require_once 'core/Router.php';
 require_once 'models/payments.php';
+require_once 'models/users.php';
 
 class AdminHome extends Handler
 {
 	public static function GET()
 	{
-		// TODO: check if user is authenticated as admin
+		if (!isset($_SESSION['user']) || !$_SESSION['user'] instanceof Admin) {
+			header('Location: /login/');
+			exit;
+		}
 		require_once 'models/users.php';
 		$donations = Donation::getAllPending();
 		require 'views/admin/donations/index.php';

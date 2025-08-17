@@ -1,14 +1,17 @@
 <?php
 require_once 'core/Router.php';
+require_once 'models/payments.php';
+require_once 'models/users.php';
 
 class AdminDonations extends Handler
 {
 	public static function __callStatic(string $method, array $params)
 	{
-		// TODO: check if user is authenticated as admin
+		if (!isset($_SESSION['user']) || !$_SESSION['user'] instanceof Admin) {
+			header('Location: /login/');
+			exit;
+		}
 		$id = $params['id'];
-		require_once 'models/payments.php';
-		require_once 'models/users.php';
 		$donation = Donation::getPendingById($id);
 		if (!$donation)
 			http_error(404);
