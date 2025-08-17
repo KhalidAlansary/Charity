@@ -125,7 +125,7 @@ class Admin extends User implements ILogin
 {
 	public static function parse($row)
 	{
-		$admin = new Admin();
+		$admin = new self;
 		$admin->id = $row['id'];
 		$admin->name = $row['name'];
 		$admin->email = $row['email'];
@@ -140,7 +140,7 @@ class Volunteer extends User implements ILogin
 
 	public static function parse($row)
 	{
-		$volunteer = new Volunteer();
+		$volunteer = new self;
 		$volunteer->id = $row['id'];
 		$volunteer->name = $row['name'];
 		$volunteer->email = $row['email'];
@@ -159,7 +159,7 @@ class Donor extends User implements ILogin
 
 	public static function parse($row)
 	{
-		$donor = new Donor();
+		$donor = new self;
 		$donor->id = $row['id'];
 		$donor->name = $row['name'];
 		$donor->email = $row['email'];
@@ -177,7 +177,7 @@ class Beneficiary extends User implements ILogin
 
 	public static function parse($row)
 	{
-		$beneficiary = new Beneficiary();
+		$beneficiary = new self;
 		$beneficiary->id = $row['id'];
 		$beneficiary->name = $row['name'];
 		$beneficiary->email = $row['email'];
