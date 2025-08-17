@@ -145,6 +145,16 @@ class PendingState extends DonationState
 		$logger->write(
 			"Donation of {$this->donation->amount} by {$this->donation->donor->name} has been cancelled."
 		);
+
+		$dbh = Database::getHandle();
+		$stmt = $dbh->prepare(
+			<<<SQL
+			delete from pending_donations
+			where id = ?
+		SQL
+		);
+		$stmt->execute([$this->donation->id]);
+
 		$this->donation->state = new CancelledState($this->donation);
 	}
 }
