@@ -8,7 +8,7 @@ ob_start();
 <h2>Pending donations</h2>
 
 <?php foreach ($donations as $donation): ?>
-	<div id="donation-<?= htmlspecialchars($donation->id) ?>">
+	<div>
 		<p>Donation ID: <?= htmlspecialchars($donation->id) ?></p>
 		<p>Amount: <?= htmlspecialchars(number_format($donation->amount, 2)) ?> EGP</p>
 		<p>Donor: <?= htmlspecialchars($donation->donor->name ?: $donation->donor->email) ?></p>
