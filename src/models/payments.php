@@ -31,17 +31,22 @@ class Donation
 		$dbh = Database::getHandle();
 		$stmt = $dbh->prepare(
 			<<<SQL
-			select * from pending_donations join users
+			select pending_donations.id as donation_id,
+				pending_donations.amount as amount,
+				users.id as id,
+				users.name as name,
+				users.email as email,
+				users.created_at as created_at,
+				users.data as data
+			from pending_donations join users
 			on pending_donations.donor_id = users.id
 		SQL
 		);
 		$stmt->execute();
 		while ($row = $stmt->fetch()) {
-			$donor_row = $row;
-			$donor_row['id'] = $row['donor_id'];
-			$donor = Donor::parse($donor_row);
+			$donor = Donor::parse($row);
 			$donation = new Donation($row['amount'], $donor);
-			$donation->id = $row['id'];
+			$donation->id = $row['donation_id'];
 			$donation->state = new PendingState($donation);
 			yield $donation;
 		}
@@ -52,7 +57,14 @@ class Donation
 		$dbh = Database::getHandle();
 		$stmt = $dbh->prepare(
 			<<<SQL
-			select * from pending_donations join users
+			select pending_donations.id as donation_id,
+				pending_donations.amount as amount,
+				users.id as id,
+				users.name as name,
+				users.email as email,
+				users.created_at as created_at,
+				users.data as data
+			from pending_donations join users
 			on pending_donations.donor_id = users.id
 			where pending_donations.id = ?
 		SQL
@@ -64,11 +76,9 @@ class Donation
 			return null;
 		}
 
-		$donor_row = $row;
-		$donor_row['id'] = $row['donor_id'];
-		$donor = Donor::parse($donor_row);
+		$donor = Donor::parse($row);
 		$donation = new Donation($row['amount'], $donor);
-		$donation->id = $row['id'];
+		$donation->id = $row['donation_id'];
 		$donation->state = new PendingState($donation);
 
 		return $donation;
