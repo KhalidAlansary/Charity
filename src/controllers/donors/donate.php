@@ -17,7 +17,7 @@ class Donate extends Handler
 			header('HX-Redirect: /login/');
 			exit;
 		}
-		$_SESSION['donation'] = new Donation((float)$_POST['amount'], $donor);
+		$_SESSION['donation'] = new Donation($_POST['amount'], $donor);
 		readfile('components/donate/confirm.html');
 	}
 
@@ -28,6 +28,7 @@ class Donate extends Handler
 			http_error(400);
 
 		$donation->proceed();
+		unset($_SESSION['donation']);
 		header('HX-Redirect: /donors/');
 	}
 
