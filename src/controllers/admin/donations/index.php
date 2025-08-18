@@ -11,7 +11,6 @@ class AdminHome extends Handler
 			header('Location: /login/');
 			exit;
 		}
-		require_once 'models/users.php';
 		$donations = Donation::getAllPending();
 		require 'views/admin/donations/index.php';
 	}
