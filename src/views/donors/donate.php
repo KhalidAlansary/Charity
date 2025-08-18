@@ -8,7 +8,7 @@ ob_start();
 <form hx-post="/donors/donate" hx-swap="outerHTML">
 	<label>
 		Donation Amount:
-		<input type="number" id="amount" name="amount" required min="0.01" step="0.01" autofocus>
+		<input type="number" name="amount" required min="0.01" step="0.01" autofocus>
 	</label>
 
 	<button type="submit">Donate</button>
