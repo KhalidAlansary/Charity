@@ -29,7 +29,7 @@ class Donation
 	public static function getAllPending()
 	{
 		$dbh = Database::getHandle();
-		$stmt = $dbh->prepare(
+		$rows = $dbh->query(
 			<<<SQL
 			select pending_donations.id as donation_id,
 				pending_donations.amount as amount,
@@ -42,8 +42,8 @@ class Donation
 			on pending_donations.donor_id = users.id
 		SQL
 		);
-		$stmt->execute();
-		while ($row = $stmt->fetch()) {
+
+		foreach ($rows as $row) {
 			$donor = Donor::parse($row);
 			$donation = new Donation($row['amount'], $donor);
 			$donation->id = $row['donation_id'];

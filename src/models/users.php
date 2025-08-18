@@ -96,16 +96,15 @@ abstract class User
 	public static function getAll()
 	{
 		$dbh = Database::getHandle();
-
-		$stmt = $dbh->prepare(
+		$rows = $dbh->query(
 			<<<SQL
 			select id, name, email, type, data, created_at
 			from users
 		SQL
 		);
-		$stmt->execute();
+
 		$users = [];
-		while ($row = $stmt->fetch()) {
+		foreach ($rows as $row) {
 			$userClass = match ($row['type']) {
 				'admin' => Admin::class,
 				'volunteer' => Volunteer::class,
