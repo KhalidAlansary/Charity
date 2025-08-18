@@ -7,13 +7,13 @@ class Router extends Singleton
 
 	public function register(string $route, $handler): void
 	{
-		$route = rtrim($route, '/') . '/';
+		$route = rtrim($route, '/');
 		$this->routes[$route] = $handler;
 	}
 
 	public function dispatch()
 	{
-		$path = rtrim($_SERVER['REQUEST_URI'], '/') . '/';
+		$path = rtrim($_SERVER['REQUEST_URI'], '/');
 
 		foreach ($this->routes as $route => $controller) {
 			// Transform the route to a regex pattern
