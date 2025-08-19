@@ -12,7 +12,7 @@ ob_start();
 			<th>ID</th>
 			<th>Name</th>
 			<th>Email</th>
-			<th>Donation Method</th>
+			<th>Payment Method</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -21,7 +21,7 @@ ob_start();
 				<td><?= htmlspecialchars($donor->id) ?></td>
 				<td><?= htmlspecialchars($donor->name ?? '') ?></td>
 				<td><?= htmlspecialchars($donor->email) ?></td>
-				<td><?= htmlspecialchars($donor->donationMethod) ?></td>
+				<td><?= htmlspecialchars($donor->paymentMethod) ?></td>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>

@@ -1,5 +1,6 @@
 <?php
 require_once 'core/singletons.php';
+require_once 'models/payments.php';
 
 interface ILogin
 {
@@ -154,7 +155,7 @@ class Volunteer extends User implements ILogin
 
 class Donor extends User implements ILogin
 {
-	public $donationMethod;
+	public PaymentMethod $paymentMethod;
 
 	public static function parse($row)
 	{
@@ -165,7 +166,11 @@ class Donor extends User implements ILogin
 		$donor->created_at = $row['created_at'];
 
 		$data = json_decode($row['data'], true);
-		$donor->donationMethod = $data['donationMethod'] ?? 'cash';
+		$donor->paymentMethod = match ($data['payment_method'] ?? 'credit_card') {
+			'credit_card' => new CreditCardPayment,
+			'paypal' => new PayPalPayment,
+			'bank_transfer' => new BankTransferPayment,
+		};
 		return $donor;
 	}
 }

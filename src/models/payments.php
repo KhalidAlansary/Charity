@@ -1,5 +1,50 @@
 <?php
 require_once 'core/singletons.php';
+require_once 'models/users.php';
+
+interface PaymentMethod
+{
+	public function pay(float $amount): void;
+}
+
+class CreditCardPayment implements PaymentMethod
+{
+	public function __toString()
+	{
+		return "Credit Card";
+	}
+
+	public function pay(float $amount): void
+	{
+		Logger::log("Processing credit card payment of \${$amount}");
+	}
+}
+
+class PayPalPayment implements PaymentMethod
+{
+	public function __toString()
+	{
+		return "PayPal";
+	}
+
+	public function pay(float $amount): void
+	{
+		Logger::log("Processing PayPal payment of \${$amount}");
+	}
+}
+
+class BankTransferPayment implements PaymentMethod
+{
+	public function __toString()
+	{
+		return "Bank Transfer";
+	}
+
+	public function pay(float $amount): void
+	{
+		Logger::log("Processing bank transfer payment of \${$amount}");
+	}
+}
 
 class Donation
 {
@@ -102,6 +147,7 @@ class CreatedState extends DonationState
 {
 	public function proceed()
 	{
+		$this->donation->donor->paymentMethod->pay($this->donation->amount);
 		$dbh = Database::getHandle();
 		$stmt = $dbh->prepare(
 			<<<SQL
