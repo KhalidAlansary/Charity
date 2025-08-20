@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?= htmlspecialchars($pageTitle ?? 'Charity') ?></title>
 	<link rel="stylesheet" href="/public/css/styles.css">
+	<script src="/public/js/app.js" defer></script>
 </head>
 
 <body hx-ext="response-targets">
@@ -26,14 +27,6 @@
 		</ul>
 	</nav>
 	<main><?= $content ?></main>
-	<script
-		src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"
-		integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/htmx-ext-response-targets@2.0.2"
-		integrity="sha384-aiAPowx3gG+h620/TJLIfLPgBcn6DMWlhu45oOhWVwTOjds9E6X2pmGbT4Xc8XMJ"
-		crossorigin="anonymous"></script>
 </body>
 
 </html>

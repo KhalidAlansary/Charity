@@ -1,0 +1,8 @@
+.editorconfig
+.env.example
+.git/
+.gitignore
+.pg_format
+.vscode/
+README.md
+node_modules/

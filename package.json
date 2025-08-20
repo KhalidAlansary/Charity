@@ -1,0 +1,20 @@
+{
+	"name": "charity",
+	"private": true,
+	"scripts": {
+		"build": "esbuild assets/app.js --bundle --minify --outfile=public/js/app.js"
+	},
+	"author": {
+		"name": "Khalid Alansary",
+		"email": "khaled.ansary2003@outlook.com",
+		"url": "https://khalidalansary.github.io/Resume/"
+	},
+	"type": "module",
+	"dependencies": {
+		"htmx-ext-response-targets": "^2.0.3",
+		"htmx.org": "^2.0.6"
+	},
+	"devDependencies": {
+		"esbuild": "^0.25.9"
+	}
+}
