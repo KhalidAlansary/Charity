@@ -97,7 +97,7 @@ class Donation
 		}
 	}
 
-	public static function getPendingById(int $id)
+	public static function getPendingById($id)
 	{
 		$dbh = Database::getHandle();
 		$stmt = $dbh->prepare(
