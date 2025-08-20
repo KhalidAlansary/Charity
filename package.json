@@ -2,7 +2,12 @@
 	"name": "charity",
 	"private": true,
 	"scripts": {
-		"build": "esbuild assets/app.js --bundle --minify --outfile=public/js/app.js"
+		"dev:js": "esbuild assets/app.js --bundle --outfile=public/js/app.js --watch=forever",
+		"dev:css": "npx @tailwindcss/cli -i assets/app.css -o public/css/styles.css --watch",
+		"dev": "npm run dev:js & npm run dev:css",
+		"build:js": "esbuild assets/app.js --bundle --minify --outfile=public/js/app.js",
+		"build:css": "npx @tailwindcss/cli -i assets/app.css -o public/css/styles.css",
+		"build": "npm run build:js & npm run build:css"
 	},
 	"author": {
 		"name": "Khalid Alansary",
@@ -11,10 +16,13 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@tailwindcss/cli": "^4.1.12",
 		"alpinejs": "^3.14.9",
+		"daisyui": "^5.0.50",
 		"htmx-ext-response-targets": "^2.0.3",
 		"htmx.org": "^2.0.6",
-		"lucide": "^0.540.0"
+		"lucide": "^0.540.0",
+		"tailwindcss": "^4.1.12"
 	},
 	"devDependencies": {
 		"esbuild": "^0.25.9"

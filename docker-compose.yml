@@ -36,7 +36,6 @@ services:
             - ./nginx.conf:/etc/nginx/nginx.conf:ro
             - ./src/:/var/www/html:ro
             - ./public/images/:/var/www/public/images:ro
-            - ./public/css/:/var/www/public/css:ro
             - logs:/var/www/logs
         depends_on:
             - phpserver
