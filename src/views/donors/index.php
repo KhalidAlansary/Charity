@@ -27,6 +27,8 @@ ob_start();
 	</tbody>
 </table>
 
+<hr>
+
 <a href="/donors/donate/">Donate</a>
 
 <?php

@@ -1,3 +1,86 @@
 @import "tailwindcss" source(none);
 @source "../src/**/*.{html,js,php}";
 @plugin "daisyui";
+
+h1 {
+	@apply text-3xl font-bold text-primary m-4 text-center;
+}
+
+button {
+	@apply btn;
+}
+
+nav {
+	@apply navbar;
+}
+
+nav a {
+	@apply link link-hover;
+	margin: 0 0.5rem;
+}
+
+.navbar-end {
+	@apply ml-auto;
+}
+
+form {
+	@apply fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 m-auto;
+}
+
+form label {
+	@apply label;
+	display: block;
+	margin-bottom: 1em;
+	position: relative;
+	display: block;
+}
+
+form label button {
+	position: absolute;
+	right: 0.75em;
+	top: 0;
+	bottom: 0;
+	height: 2.25em;
+	z-index: 2;
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	padding: 0;
+	cursor: pointer;
+	top: 50%;
+	transform: translateY(-20%);
+}
+
+form label input {
+	@apply input;
+	display: block;
+	margin-top: 0.25em;
+	padding-right: 2.5em;
+}
+
+form button[type="submit"] {
+	@apply btn-neutral mt-4;
+}
+
+form button[type="reset"] {
+	@apply btn-outline mt-4;
+}
+
+form a {
+	@apply link link-hover;
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+form select {
+	@apply select;
+	display: block;
+}
+
+table {
+	@apply table w-full;
+}
+
+hr {
+	@apply divider my-4;
+}

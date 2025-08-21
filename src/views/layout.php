@@ -11,20 +11,20 @@
 
 <body hx-ext="response-targets">
 	<nav>
-		<ul>
-			<li><a href="/volunteers">Volunteers</a></li>
-			<li><a href="/donors">Donors</a></li>
-			<li><a href="/beneficiaries">Beneficiaries</a></li>
-			<li class="user-menu">
-				<?php if (isset($_SESSION['user'])): ?>
-					<span>Hello, <?= $_SESSION['user']->name ?: $_SESSION['user']->email ?></span>
-					<a href="/logout">Log out</a>
-				<?php else: ?>
-					<a href="/login">Log in</a>
-					<a href="/signup">Sign up</a>
-				<?php endif; ?>
-			</li>
-		</ul>
+		<a href="/volunteers">Volunteers</a>
+		<a href="/donors">Donors</a>
+		<a href="/beneficiaries">Beneficiaries</a>
+
+		<div class="navbar-end">
+			<?php if (isset($_SESSION['user'])): ?>
+				<span>Hello, <?= $_SESSION['user']->name ?: $_SESSION['user']->email ?></span>
+				<a href="/logout">Log out</a>
+			<?php else: ?>
+				<a href="/login">Log in</a>
+				<a href="/signup">Sign up</a>
+			<?php endif; ?>
+		</div>
+
 	</nav>
 	<main><?= $content ?></main>
 </body>
