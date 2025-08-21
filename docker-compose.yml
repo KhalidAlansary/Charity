@@ -35,10 +35,21 @@ services:
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf:ro
             - ./src/:/var/www/html:ro
-            - ./public/images/:/var/www/public/images:ro
+            - ./public/:/var/www/public/:ro
             - logs:/var/www/logs
         depends_on:
             - phpserver
+
+    assets:
+        image: docker.io/node
+        user: node
+        working_dir: /home/node/app
+        volumes:
+            - ./:/home/node/app
+        # npm run dev alone is not enough due to this issue: https://github.com/tailwindlabs/tailwindcss/issues/18540
+        # currently, we have to run compose down and up again after modifying the css
+        # if this is solved in the future, remove the build command and use `command: npm run dev`
+        command: "npm run build && npm run dev"
 
 secrets:
     db_password:

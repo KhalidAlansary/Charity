@@ -4,9 +4,9 @@
 	"scripts": {
 		"dev:js": "esbuild assets/app.js --bundle --outfile=public/js/app.js --watch=forever",
 		"dev:css": "npx @tailwindcss/cli -i assets/app.css -o public/css/styles.css --watch",
-		"dev": "npm run dev:js & npm run dev:css",
+		"dev": "npm run dev:css & npm run dev:js",
 		"build:js": "esbuild assets/app.js --bundle --minify --outfile=public/js/app.js",
-		"build:css": "npx @tailwindcss/cli -i assets/app.css -o public/css/styles.css",
+		"build:css": "npx @tailwindcss/cli --minify -i assets/app.css -o public/css/styles.css",
 		"build": "npm run build:js & npm run build:css"
 	},
 	"author": {
