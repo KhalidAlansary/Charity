@@ -41,15 +41,18 @@ services:
             - phpserver
 
     assets:
-        image: docker.io/node
+        build:
+            context: .
+            dockerfile: nginx.Dockerfile
+            target: assets
         user: node
         working_dir: /home/node/app
         volumes:
             - ./:/home/node/app
-        # npm run dev alone is not enough due to this issue: https://github.com/tailwindlabs/tailwindcss/issues/18540
+        # pnpm run dev alone is not enough due to this issue: https://github.com/tailwindlabs/tailwindcss/issues/18540
         # currently, we have to run compose down and up again after modifying the css
-        # if this is solved in the future, remove the build command and use `command: npm run dev`
-        command: "npm run build && npm run dev"
+        # if this is solved in the future, remove the build command and use `command: pnpm run dev`
+        command: "pnpm run build && pnpm run dev"
 
 secrets:
     db_password:
