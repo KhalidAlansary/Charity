@@ -3,7 +3,7 @@ require_once 'core/Router.php';
 require_once 'models/payments.php';
 require_once 'models/users.php';
 
-class AdminDonations extends Handler
+class AdminDonation extends Handler
 {
 	public static function __callStatic(string $method, array $params)
 	{
@@ -30,4 +30,4 @@ class AdminDonations extends Handler
 	}
 }
 
-return AdminDonations::class;
+return AdminDonation::class;
