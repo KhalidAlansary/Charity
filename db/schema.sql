@@ -1,9 +1,3 @@
-create type donationMethod as enum (
-	'cash',
-	'check',
-	'online'
-);
-
 create type userType as enum (
 	'admin',
 	'volunteer',
@@ -26,16 +20,4 @@ create table pending_donations (
 	id integer generated always as identity primary key,
 	amount numeric not null,
 	donor_id integer references users (id)
-);
-
-create table assignments (
-	id integer primary key generated always as identity,
-	volunteer_id integer references users (id)
-);
-
-create table events (
-	id integer generated always as identity primary key,
-	name text,
-	date date,
-	address text
 );
