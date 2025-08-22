@@ -1,15 +1,17 @@
 <?php
 require_once 'core/singletons.php';
 require_once 'models/payments.php';
+require_once 'models/events.php';
 
 interface ILogin
 {
 	public static function parse($row);
 }
 
-abstract class User
+abstract class User implements EventListener
 {
 	public $id, $name, $email, $created_at;
+	public array $subscriptions;
 
 	public static function login($email, $password)
 	{
@@ -17,7 +19,7 @@ abstract class User
 
 		$stmt = $dbh->prepare(
 			<<<SQL
-			select id, name, email, type, data, created_at
+			select id, name, email, type, data, subscriptions, created_at
 			from users where email = ? and password = ?
 		SQL
 		);
@@ -46,7 +48,7 @@ abstract class User
 			<<<SQL
 			insert into users (name, email, password, type)
 			values (?, ?, ?, ?)
-			returning id, name, email, data, created_at
+			returning id, name, email, data, subscriptions, created_at
 		SQL
 		);
 		try {
@@ -75,7 +77,7 @@ abstract class User
 
 		$stmt = $dbh->prepare(
 			<<<SQL
-			select id, name, email, type, data, created_at
+			select id, name, email, type, data, subscriptions, created_at
 			from users where id = ?
 		SQL
 		);
@@ -99,7 +101,7 @@ abstract class User
 		$dbh = Database::getHandle();
 		$rows = $dbh->query(
 			<<<SQL
-			select id, name, email, type, data, created_at
+			select id, name, email, type, data, subscriptions, created_at
 			from users
 		SQL
 		);
@@ -119,6 +121,55 @@ abstract class User
 			return $user instanceof static;
 		});
 	}
+
+	public function save()
+	{
+		$dbh = Database::getHandle();
+		$stmt = $dbh->prepare(
+			<<<SQL
+			update users
+			set name = ?, email = ?, subscriptions = ?
+			where id = ?
+			SQL
+		);
+		$stmt->execute([
+			$this->name,
+			$this->email,
+			json_encode(array_fill_keys($this->subscriptions, true)),
+			$this->id
+		]);
+	}
+
+	public function saveSubscription(string $eventType)
+	{
+		$this->subscriptions[] = $eventType;
+		$dbh = Database::getHandle();
+		$stmt = $dbh->prepare(
+			<<<SQL
+			update users
+			set subscriptions = subscriptions || jsonb_build_object(?::text, true)
+			where id = ?
+			SQL
+		);
+		$stmt->execute([$eventType, $this->id]);
+	}
+
+	public function removeSubscription(string $eventType)
+	{
+		$this->subscriptions = array_filter(
+			$this->subscriptions,
+			fn($sub) => $sub !== $eventType
+		);
+		$dbh = Database::getHandle();
+		$stmt = $dbh->prepare(
+			<<<SQL
+			update users
+			set subscriptions = subscriptions - ?
+			where id = ?
+			SQL
+		);
+		$stmt->execute([$eventType, $this->id]);
+	}
 }
 
 class Admin extends User implements ILogin
@@ -129,8 +180,14 @@ class Admin extends User implements ILogin
 		$admin->id = $row['id'];
 		$admin->name = $row['name'];
 		$admin->email = $row['email'];
+		$admin->subscriptions = array_keys(json_decode($row['subscriptions'], true));
 		$admin->created_at = $row['created_at'];
 		return $admin;
+	}
+
+	public function update(string $data)
+	{
+		Logger::log("Admin {$this->name} received update: $data");
 	}
 }
 
@@ -144,12 +201,18 @@ class Volunteer extends User implements ILogin
 		$volunteer->id = $row['id'];
 		$volunteer->name = $row['name'];
 		$volunteer->email = $row['email'];
+		$volunteer->subscriptions = array_keys(json_decode($row['subscriptions'], true));
 		$volunteer->created_at = $row['created_at'];
 
 		$data = json_decode($row['data'], true);
 		$volunteer->skills = $data['skills'] ?? [];
 		$volunteer->availability = $data['availability'] ?? [];
 		return $volunteer;
+	}
+
+	public function update(string $data)
+	{
+		Logger::log("Volunteer {$this->name} received update: $data");
 	}
 }
 
@@ -163,6 +226,7 @@ class Donor extends User implements ILogin
 		$donor->id = $row['id'];
 		$donor->name = $row['name'];
 		$donor->email = $row['email'];
+		$donor->subscriptions = array_keys(json_decode($row['subscriptions'], true));
 		$donor->created_at = $row['created_at'];
 
 		$data = json_decode($row['data'], true);
@@ -172,6 +236,11 @@ class Donor extends User implements ILogin
 			'bank_transfer' => new BankTransferPayment,
 		};
 		return $donor;
+	}
+
+	public function update(string $data)
+	{
+		Logger::log("Donor {$this->name} received update: $data");
 	}
 }
 
@@ -185,10 +254,16 @@ class Beneficiary extends User implements ILogin
 		$beneficiary->id = $row['id'];
 		$beneficiary->name = $row['name'];
 		$beneficiary->email = $row['email'];
+		$beneficiary->subscriptions = array_keys(json_decode($row['subscriptions'], true));
 		$beneficiary->created_at = $row['created_at'];
 
 		$data = json_decode($row['data'], true);
 		$beneficiary->needs = $data['needs'];
 		return $beneficiary;
+	}
+
+	public function update(string $data)
+	{
+		Logger::log("Beneficiary {$this->name} received update: $data");
 	}
 }

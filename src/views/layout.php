@@ -17,7 +17,9 @@
 
 		<div class="navbar-end">
 			<?php if (isset($_SESSION['user'])): ?>
-				<span>Hello, <?= $_SESSION['user']->name ?: $_SESSION['user']->email ?></span>
+				<a href="/profile">
+					Hello, <?= $_SESSION['user']->name ?: $_SESSION['user']->email ?>
+				</a>
 				<a href="/logout">Log out</a>
 			<?php else: ?>
 				<a href="/login">Log in</a>
