@@ -3,11 +3,11 @@
 	"private": true,
 	"scripts": {
 		"dev:js": "esbuild assets/app.js --bundle --outfile=public/js/app.js --watch=forever",
-		"dev:css": "npx @tailwindcss/cli -i assets/app.css -o public/css/styles.css --watch",
-		"dev": "npm run dev:css & npm run dev:js",
+		"dev:css": "tailwindcss -i assets/app.css -o public/css/styles.css --watch",
+		"dev": "pnpm run dev:css & pnpm run dev:js",
 		"build:js": "esbuild assets/app.js --bundle --minify --outfile=public/js/app.js",
-		"build:css": "npx @tailwindcss/cli --minify -i assets/app.css -o public/css/styles.css",
-		"build": "npm run build:js & npm run build:css"
+		"build:css": "tailwindcss --minify -i assets/app.css -o public/css/styles.css",
+		"build": "pnpm run build:js & pnpm run build:css"
 	},
 	"author": {
 		"name": "Khalid Alansary",
@@ -15,6 +15,7 @@
 		"url": "https://khalidalansary.github.io/Resume/"
 	},
 	"type": "module",
+	"packageManager": "pnpm@10.15.0",
 	"dependencies": {
 		"@tailwindcss/cli": "^4.1.12",
 		"alpinejs": "^3.14.9",

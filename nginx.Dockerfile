@@ -1,9 +1,10 @@
 FROM docker.io/node AS assets
+RUN npm install -g pnpm
 WORKDIR /app
-COPY package.json package-lock.json .
-RUN npm ci
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .
+RUN pnpm install --frozen-lockfile
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 FROM docker.io/nginx
 COPY nginx.conf /etc/nginx/nginx.conf
