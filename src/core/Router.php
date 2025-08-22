@@ -47,7 +47,9 @@ abstract class Handler
 function http_error(int $code): void
 {
 	http_response_code($code);
-	header('HX-Refresh: true');
-	readfile("pages/errors/$code.html");
+	header('HX-Reswap: outerHTML');
+	header('HX-Retarget: body');
+	header("HX-Replace-Url: $_SERVER[REQUEST_URI]");
+	require "views/error.php";
 	exit;
 }
