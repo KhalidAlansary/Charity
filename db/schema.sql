@@ -18,6 +18,7 @@ create table users (
 	password text not null,
 	type userType not null,
 	data jsonb not null default '{}',
+	subscriptions jsonb not null default '{}',
 	created_at timestamp default current_timestamp
 );
 
