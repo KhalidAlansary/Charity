@@ -56,3 +56,51 @@ class EventManager extends Singleton
 		}
 	}
 }
+
+class Fundraiser
+{
+	public int $id;
+	public string $title;
+	public string $date;
+
+	public function __construct(string $title, string $date)
+	{
+		$this->title = $title;
+		$this->date = $date;
+	}
+
+	public function save(): void
+	{
+		$dbh = Database::getHandle();
+		$stmt = $dbh->prepare(
+			<<<SQL
+			insert into fundraisers (title, date)
+			values (?, ?)
+			SQL
+		);
+		$stmt->execute([$this->title, $this->date]);
+		$this->id = (int)$dbh->lastInsertId();
+		$new_fundraiser = $this;
+		require 'components/fundraiser_row.php';
+		$eventManager = EventManager::getInstance();
+		$eventManager->notify('fundraisers', "{$this->title} on {$this->date}");
+	}
+
+	public static function getAll(): array
+	{
+		$dbh = Database::getHandle();
+		$stmt = $dbh->query(
+			<<<SQL
+			select * from fundraisers
+			SQL
+		);
+		$rows = $stmt->fetchAll();
+		$fundraisers = [];
+		foreach ($rows as $row) {
+			$fundraiser = new Fundraiser($row['title'], $row['date']);
+			$fundraiser->id = (int)$row['id'];
+			$fundraisers[] = $fundraiser;
+		}
+		return $fundraisers;
+	}
+}

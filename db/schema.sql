@@ -21,3 +21,9 @@ create table pending_donations (
 	amount numeric not null,
 	donor_id integer references users (id)
 );
+
+create table fundraisers (
+	id integer generated always as identity primary key,
+	title text not null,
+	date timestamp not null
+);

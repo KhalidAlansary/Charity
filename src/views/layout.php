@@ -11,6 +11,7 @@
 
 <body hx-ext="response-targets">
 	<nav>
+		<a href="/admin">Admin</a>
 		<a href="/volunteers">Volunteers</a>
 		<a href="/donors">Donors</a>
 		<a href="/beneficiaries">Beneficiaries</a>

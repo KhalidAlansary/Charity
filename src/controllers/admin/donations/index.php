@@ -3,7 +3,7 @@ require_once 'core/Router.php';
 require_once 'models/payments.php';
 require_once 'models/users.php';
 
-class AdminHome extends Handler
+class AdminDonations extends Handler
 {
 	public static function GET()
 	{
@@ -16,4 +16,4 @@ class AdminHome extends Handler
 	}
 }
 
-return AdminHome::class;
+return AdminDonations::class;
