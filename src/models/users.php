@@ -5,15 +5,28 @@ require_once 'models/events.php';
 
 interface ILogin
 {
-	public static function parse($row);
+	public function parse(array $data);
 }
 
 abstract class User implements EventListener
 {
-	public $id, $name, $email, $created_at;
+	public int $id;
+	public string $name, $email, $created_at;
 	public array $subscriptions;
 
-	public static function login($email, $password)
+	public function __construct(array $row)
+	{
+		$this->id = $row['id'];
+		$this->name = $row['name'];
+		$this->email = $row['email'];
+		$this->subscriptions = array_keys(json_decode($row['subscriptions'], true));
+		$this->created_at = $row['created_at'];
+		$this->parse(json_decode($row['data'], true));
+	}
+
+	abstract public function parse(array $data);
+
+	public static function login(string $email, string $password)
 	{
 		$dbh = Database::getHandle();
 
@@ -36,10 +49,10 @@ abstract class User implements EventListener
 			'beneficiary' => Beneficiary::class,
 		};
 
-		return $userClass::parse($row);
+		return new $userClass($row);
 	}
 
-	public static function signup($name, $email, $password, $type)
+	public static function signup(string $name, string $email, string $password, string $type)
 	{
 		$dbh = Database::getHandle();
 
@@ -68,10 +81,10 @@ abstract class User implements EventListener
 			'beneficiary' => Beneficiary::class,
 		};
 
-		return $userClass::parse($row);
+		return new $userClass($row);
 	}
 
-	public static function getById($id)
+	public static function getById(int $id)
 	{
 		$dbh = Database::getHandle();
 
@@ -93,7 +106,7 @@ abstract class User implements EventListener
 			'beneficiary' => Beneficiary::class,
 		};
 
-		return $userClass::parse($row);
+		return new $userClass($row);
 	}
 
 	public static function getAll()
@@ -114,7 +127,8 @@ abstract class User implements EventListener
 				'donor' => Donor::class,
 				'beneficiary' => Beneficiary::class,
 			};
-			$users[] = $userClass::parse($row);
+
+			$users[] = new $userClass($row);
 		}
 
 		return array_filter($users, function ($user) {
@@ -174,16 +188,7 @@ abstract class User implements EventListener
 
 class Admin extends User implements ILogin
 {
-	public static function parse($row)
-	{
-		$admin = new self;
-		$admin->id = $row['id'];
-		$admin->name = $row['name'];
-		$admin->email = $row['email'];
-		$admin->subscriptions = array_keys(json_decode($row['subscriptions'], true));
-		$admin->created_at = $row['created_at'];
-		return $admin;
-	}
+	public function parse($data) {}
 
 	public function update(string $data)
 	{
@@ -195,19 +200,10 @@ class Volunteer extends User implements ILogin
 {
 	public $skills, $availability;
 
-	public static function parse($row)
+	public function parse($data)
 	{
-		$volunteer = new self;
-		$volunteer->id = $row['id'];
-		$volunteer->name = $row['name'];
-		$volunteer->email = $row['email'];
-		$volunteer->subscriptions = array_keys(json_decode($row['subscriptions'], true));
-		$volunteer->created_at = $row['created_at'];
-
-		$data = json_decode($row['data'], true);
-		$volunteer->skills = $data['skills'] ?? [];
-		$volunteer->availability = $data['availability'] ?? [];
-		return $volunteer;
+		$this->skills = $data['skills'] ?? [];
+		$this->availability = $data['availability'] ?? [];
 	}
 
 	public function update(string $data)
@@ -220,22 +216,13 @@ class Donor extends User implements ILogin
 {
 	public PaymentMethod $paymentMethod;
 
-	public static function parse($row)
+	public function parse(array $data)
 	{
-		$donor = new self;
-		$donor->id = $row['id'];
-		$donor->name = $row['name'];
-		$donor->email = $row['email'];
-		$donor->subscriptions = array_keys(json_decode($row['subscriptions'], true));
-		$donor->created_at = $row['created_at'];
-
-		$data = json_decode($row['data'], true);
-		$donor->paymentMethod = match ($data['payment_method'] ?? 'credit_card') {
+		$this->paymentMethod = match ($data['payment_method'] ?? 'credit_card') {
 			'credit_card' => new CreditCardPayment,
 			'paypal' => new PayPalPayment,
 			'bank_transfer' => new BankTransferPayment,
 		};
-		return $donor;
 	}
 
 	public function update(string $data)
@@ -248,18 +235,9 @@ class Beneficiary extends User implements ILogin
 {
 	public $needs;
 
-	public static function parse($row)
+	public function parse(array $data)
 	{
-		$beneficiary = new self;
-		$beneficiary->id = $row['id'];
-		$beneficiary->name = $row['name'];
-		$beneficiary->email = $row['email'];
-		$beneficiary->subscriptions = array_keys(json_decode($row['subscriptions'], true));
-		$beneficiary->created_at = $row['created_at'];
-
-		$data = json_decode($row['data'], true);
-		$beneficiary->needs = $data['needs'];
-		return $beneficiary;
+		$this->needs = $data['needs'] ?? [];
 	}
 
 	public function update(string $data)
