@@ -19,6 +19,7 @@
 	"dependencies": {
 		"@tailwindcss/cli": "^4.1.12",
 		"alpinejs": "^3.14.9",
+		"cally": "^0.8.0",
 		"daisyui": "^5.0.50",
 		"htmx-ext-response-targets": "^2.0.3",
 		"htmx.org": "^2.0.6",
