@@ -17,7 +17,17 @@ ob_start();
 		<input type="text" name="title" required autofocus>
 	</label>
 
-	<input type="date" name="date" required>
+	<button type="button" popovertarget="cally-popover" class="input input-border" id="cally" style="anchor-name:--cally">
+		Pick a date
+	</button>
+	<div popover id="cally-popover" class="dropdown bg-base-100 rounded-box shadow-lg" style="position-anchor:--cally">
+		<calendar-date class="cally" onchange="updateDate(this)">
+			<i data-lucide="chevron-left" aria-label="Previous" slot="previous"></i>
+			<i data-lucide="chevron-right" aria-label="Next" slot="next"></i>
+			<calendar-month></calendar-month>
+		</calendar-date>
+	</div>
+	<input type="hidden" name="date" required>
 
 	<button type="submit">Create Fundraiser</button>
 </form>
@@ -38,6 +48,15 @@ ob_start();
 		<?php endforeach; ?>
 	</tbody>
 </table>
+
+<script>
+	function updateDate(datePicker) {
+		const dateInput = document.querySelector('input[name="date"]');
+		const dateButton = document.getElementById('cally');
+		dateInput.value = datePicker.value;
+		dateButton.textContent = new Date(datePicker.value).toLocaleDateString();
+	}
+</script>
 
 <?php
 $content = ob_get_clean();
