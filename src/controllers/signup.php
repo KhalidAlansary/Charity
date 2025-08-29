@@ -1,4 +1,5 @@
 <?php
+require_once 'models/users.php';
 require_once 'core/Router.php';
 
 return new class extends Handler
@@ -10,13 +11,12 @@ return new class extends Handler
 
 	public function POST()
 	{
-		require_once 'models/users.php';
-		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$type = $_POST['type'];
-
-		$user = User::signup($name, $email, $password, $type);
+		$user = User::signup(
+			$_POST['name'],
+			$_POST['email'],
+			$_POST['password'],
+			$_POST['type']
+		);
 		if ($user === false) {
 			http_response_code(403);
 			readfile('components/signup_error.html');
