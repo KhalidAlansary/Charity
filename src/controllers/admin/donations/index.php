@@ -3,9 +3,9 @@ require_once 'core/Router.php';
 require_once 'models/payments.php';
 require_once 'models/users.php';
 
-class AdminDonations extends Handler
+return new class extends Handler
 {
-	public static function GET()
+	public function GET()
 	{
 		if (!isset($_SESSION['user']) || !$_SESSION['user'] instanceof Admin) {
 			header('Location: /login/');
@@ -14,6 +14,4 @@ class AdminDonations extends Handler
 		$donations = Donation::getAllPending();
 		require 'views/admin/donations/index.php';
 	}
-}
-
-return AdminDonations::class;
+};

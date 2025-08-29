@@ -3,9 +3,9 @@ require_once 'core/Router.php';
 require_once 'models/payments.php';
 require_once 'models/users.php';
 
-class AdminDonation extends Handler
+return new class extends Handler
 {
-	public static function __callStatic(string $method, array $params)
+	public function __callStatic(string $method, array $params)
 	{
 		if (!isset($_SESSION['user']) || !$_SESSION['user'] instanceof Admin) {
 			header('Location: /login/');
@@ -19,15 +19,13 @@ class AdminDonation extends Handler
 		self::$method($donation);
 	}
 
-	private static function PATCH(Donation $donation)
+	private function PATCH(Donation $donation)
 	{
 		$donation->proceed();
 	}
 
-	private static function DELETE(Donation $donation)
+	private function DELETE(Donation $donation)
 	{
 		$donation->cancel();
 	}
-}
-
-return AdminDonation::class;
+};

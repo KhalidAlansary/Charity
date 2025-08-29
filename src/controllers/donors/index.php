@@ -1,14 +1,12 @@
 <?php
 require_once 'core/Router.php';
 
-class Donors extends Handler
+return new class extends Handler
 {
-	public static function GET()
+	public function GET()
 	{
 		require_once 'models/users.php';
 		$donors = Donor::getAll();
 		require 'views/donors/index.php';
 	}
-}
-
-return Donors::class;
+};

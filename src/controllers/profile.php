@@ -2,9 +2,9 @@
 require_once 'core/Router.php';
 require_once 'models/users.php';
 
-class Profile extends Handler
+return new class extends Handler
 {
-	public static function GET()
+	public function GET()
 	{
 		if (!isset($_SESSION['user'])) {
 			header('Location: /login/');
@@ -14,7 +14,7 @@ class Profile extends Handler
 		require 'views/profile.php';
 	}
 
-	public static function PATCH()
+	public function PATCH()
 	{
 		$user = $_SESSION['user'] ?? null;
 		if ($user === null) {
@@ -27,6 +27,4 @@ class Profile extends Handler
 		$user->save();
 		readfile('components/subscriptions_saved.html');
 	}
-}
-
-return Profile::class;
+};

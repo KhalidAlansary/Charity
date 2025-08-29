@@ -2,9 +2,9 @@
 require_once 'core/Router.php';
 require_once 'models/events.php';
 
-class AdminFundraisers extends Handler
+return new class extends Handler
 {
-	public static function GET()
+	public function GET()
 	{
 		if (!isset($_SESSION['user']) || !$_SESSION['user'] instanceof Admin) {
 			header('Location: /login/');
@@ -14,7 +14,7 @@ class AdminFundraisers extends Handler
 		require 'views/admin/fundraisers.php';
 	}
 
-	public static function POST()
+	public function POST()
 	{
 		if (!isset($_SESSION['user']) || !$_SESSION['user'] instanceof Admin) {
 			header('Location: /login/');
@@ -23,6 +23,4 @@ class AdminFundraisers extends Handler
 		$fundraiser = new Fundraiser($_POST['title'], $_POST['date']);
 		$fundraiser->save();
 	}
-}
-
-return AdminFundraisers::class;
+};

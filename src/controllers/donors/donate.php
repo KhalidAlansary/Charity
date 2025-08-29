@@ -3,14 +3,14 @@ require_once 'core/Router.php';
 require_once 'models/payments.php';
 require_once 'models/users.php';
 
-class Donate extends Handler
+return new class extends Handler
 {
-	public static function GET()
+	public function GET()
 	{
 		require 'views/donors/donate.php';
 	}
 
-	public static function POST()
+	public function POST()
 	{
 		$donor = $_SESSION['user'] ?? null;
 		if (!($donor instanceof Donor)) {
@@ -21,7 +21,7 @@ class Donate extends Handler
 		readfile('components/donate/confirm.html');
 	}
 
-	public static function PATCH()
+	public function PATCH()
 	{
 		$donation = $_SESSION['donation'] ?? null;
 		if (!($donation instanceof Donation))
@@ -32,7 +32,7 @@ class Donate extends Handler
 		header('HX-Redirect: /donors/');
 	}
 
-	public static function DELETE()
+	public function DELETE()
 	{
 		$donation = $_SESSION['donation'] ?? null;
 		if (!($donation instanceof Donation))
@@ -43,6 +43,4 @@ class Donate extends Handler
 		header('HX-Redirect: /donors/');
 		exit;
 	}
-}
-
-return Donate::class;
+};

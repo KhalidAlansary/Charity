@@ -1,13 +1,14 @@
 <?php
 require_once 'core/Router.php';
-class Login extends Handler
+
+return new class extends Handler
 {
-	public static function GET()
+	public function GET()
 	{
 		require 'views/login.php';
 	}
 
-	public static function POST()
+	public function POST()
 	{
 		require_once 'models/users.php';
 		$email = $_POST['email'];
@@ -24,6 +25,4 @@ class Login extends Handler
 			header('HX-Redirect: /profile/');
 		}
 	}
-}
-
-return Login::class;
+};

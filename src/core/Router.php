@@ -38,7 +38,7 @@ class Router extends Singleton
 
 abstract class Handler
 {
-	public static function __callStatic(string $method, array $args)
+	public function __call(string $method, array $args)
 	{
 		http_error(405);
 	}

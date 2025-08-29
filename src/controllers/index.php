@@ -1,12 +1,10 @@
 <?php
 require_once 'core/Router.php';
 
-class Index extends Handler
+return new class extends Handler
 {
-	public static function GET()
+	public function GET()
 	{
 		require 'views/index.php';
 	}
-}
-
-return Index::class;
+};

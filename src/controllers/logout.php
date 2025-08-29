@@ -1,8 +1,9 @@
 <?php
 require_once 'core/Router.php';
-class Logout extends Handler
+
+return new class extends Handler
 {
-	public static function GET()
+	public function GET()
 	{
 		$_SESSION = [];
 
@@ -22,6 +23,4 @@ class Logout extends Handler
 		session_destroy();
 		header('Location: /');
 	}
-}
-
-return Logout::class;
+};
