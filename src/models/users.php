@@ -3,11 +3,6 @@ require_once 'core/singletons.php';
 require_once 'models/payments.php';
 require_once 'models/events.php';
 
-interface ILogin
-{
-	public function parse(array $data);
-}
-
 abstract class User implements EventListener
 {
 	public int $id;
@@ -186,7 +181,7 @@ abstract class User implements EventListener
 	}
 }
 
-class Admin extends User implements ILogin
+class Admin extends User
 {
 	public function parse($data) {}
 
@@ -196,7 +191,7 @@ class Admin extends User implements ILogin
 	}
 }
 
-class Volunteer extends User implements ILogin
+class Volunteer extends User
 {
 	public $skills, $availability;
 
@@ -212,7 +207,7 @@ class Volunteer extends User implements ILogin
 	}
 }
 
-class Donor extends User implements ILogin
+class Donor extends User
 {
 	public PaymentMethod $paymentMethod;
 
@@ -231,7 +226,7 @@ class Donor extends User implements ILogin
 	}
 }
 
-class Beneficiary extends User implements ILogin
+class Beneficiary extends User
 {
 	public $needs;
 

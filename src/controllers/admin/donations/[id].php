@@ -6,7 +6,7 @@ require_once 'models/users.php';
 
 $handler = new class extends Handler
 {
-	public function __callStatic(string $method, array $params)
+	public function __call(string $method, array $params)
 	{
 		$id = $params['id'];
 		$donation = Donation::getPendingById($id);

@@ -82,14 +82,15 @@ class Donation
 				users.name as name,
 				users.email as email,
 				users.created_at as created_at,
-				users.data as data
+				users.data as data,
+				users.subscriptions as subscriptions
 			from pending_donations join users
 			on pending_donations.donor_id = users.id
 		SQL
 		);
 
 		foreach ($rows as $row) {
-			$donor = Donor::parse($row);
+			$donor = new Donor($row);
 			$donation = new Donation($row['amount'], $donor);
 			$donation->id = $row['donation_id'];
 			$donation->state = new PendingState($donation);
@@ -108,7 +109,8 @@ class Donation
 				users.name as name,
 				users.email as email,
 				users.created_at as created_at,
-				users.data as data
+				users.data as data,
+				users.subscriptions as subscriptions
 			from pending_donations join users
 			on pending_donations.donor_id = users.id
 			where pending_donations.id = ?
@@ -121,7 +123,7 @@ class Donation
 			return null;
 		}
 
-		$donor = Donor::parse($row);
+		$donor = new Donor($row);
 		$donation = new Donation($row['amount'], $donor);
 		$donation->id = $row['donation_id'];
 		$donation->state = new PendingState($donation);

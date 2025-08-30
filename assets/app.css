@@ -2,6 +2,10 @@
 @source "../src/**/*.{html,js,php}";
 @plugin "daisyui";
 
+a {
+	@apply link link-hover;
+}
+
 h1 {
 	@apply text-3xl font-bold text-primary m-4 text-center;
 }
