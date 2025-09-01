@@ -1,6 +1,13 @@
 {
 	"name": "charity",
 	"private": true,
+	"author": {
+		"name": "Khalid Alansary",
+		"email": "khaled.ansary2003@outlook.com",
+		"url": "https://khalidalansary.github.io/Resume/"
+	},
+	"license": "AGPL-3.0-or-later",
+	"type": "module",
 	"scripts": {
 		"dev:js": "esbuild assets/app.js --bundle --outfile=public/js/app.js --watch=forever",
 		"dev:css": "tailwindcss -i assets/app.css -o public/css/styles.css --watch",
@@ -9,12 +16,6 @@
 		"build:css": "tailwindcss --minify -i assets/app.css -o public/css/styles.css",
 		"build": "pnpm run build:js & pnpm run build:css"
 	},
-	"author": {
-		"name": "Khalid Alansary",
-		"email": "khaled.ansary2003@outlook.com",
-		"url": "https://khalidalansary.github.io/Resume/"
-	},
-	"type": "module",
 	"packageManager": "pnpm@10.15.0",
 	"dependencies": {
 		"@tailwindcss/cli": "^4.1.12",
